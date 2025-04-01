@@ -1,1 +1,2354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainBoost - Empower Your Learning</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --secondary: #FF6584;
+            --accent: #42C2FF;
+            --light: #F5F7FA;
+            --dark: #1A1A2E;
+            --success: #4CAF50;
+            --warning: #FFC107;
+            --danger: #F44336;
+            --text-light: #F0F2F5;
+            --text-dark: #333333;
+            --card-bg-light: #FFFFFF;
+            --card-bg-dark: #2A2A3A;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: var(--text-dark);
+            transition: var(--transition);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        body.dark-mode {
+            background-color: var(--dark);
+            color: var(--text-light);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: slideDown 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes slideDown {
+            from { 
+                transform: translateY(-100%); 
+                opacity: 0;
+            }
+            to { 
+                transform: translateY(0); 
+                opacity: 1;
+            }
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: var(--transition);
+        }
+
+        .logo-container:hover {
+            transform: scale(1.05);
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            animation: rotate 8s infinite linear, pulse 2s infinite alternate;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            from { transform: scale(0.95); }
+            to { transform: scale(1.05); }
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(to right, white, #E0F7FA);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: bounce 1s ease-in-out, fadeIn 1s ease-out;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            font-weight: 300;
+            margin-top: 0.5rem;
+            opacity: 0.9;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        /* Navigation */
+        nav {
+            background-color: rgba(28, 28, 46, 0.95);
+            padding: 1rem 0;
+            position: sticky;
+            top: 94px;
+            z-index: 999;
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+
+        body.dark-mode nav {
+            background-color: rgba(20, 20, 40, 0.95);
+        }
+
+        nav .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 85%;
+            margin: auto;
+            max-width: 1400px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem 1.2rem;
+            font-weight: 500;
+            border-radius: 30px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: var(--secondary);
+            transition: var(--transition);
+        }
+
+        nav a:hover {
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        nav a:hover::before {
+            width: 80%;
+        }
+
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(180deg) scale(1.1);
+        }
+
+        /* Search Bar */
+        .search-bar {
+            width: 85%;
+            margin: 1.5rem auto;
+            max-width: 1400px;
+            position: relative;
+        }
+
+        .search-bar input {
+            padding: 1rem 1.5rem;
+            width: 100%;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            padding-left: 3.5rem;
+            background: var(--card-bg-light);
+            color: var(--text-dark);
+        }
+
+        body.dark-mode .search-bar input {
+            background: var(--card-bg-dark);
+            color: var(--text-light);
+        }
+
+        .search-bar input:focus {
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.3);
+            outline: none;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        /* Container */
+        .container {
+            width: 85%;
+            margin: 2rem auto;
+            max-width: 1400px;
+        }
+
+        /* Section Styling */
+        section {
+            margin-bottom: 2.5rem;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+
+        section:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--secondary);
+            border-radius: 3px;
+        }
+
+        body.dark-mode section h2 {
+            color: var(--accent);
+        }
+
+        .section-content {
+            padding: 2rem;
+            background: var(--card-bg-light);
+        }
+
+        body.dark-mode .section-content {
+            background: var(--card-bg-dark);
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            animation: fadeIn 1s ease-out;
+            background: linear-gradient(135deg, rgba(108, 99, 255, 0.1), rgba(66, 194, 255, 0.1));
+        }
+
+        .welcome-content {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .welcome-text {
+            flex: 1;
+        }
+
+        .welcome-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .welcome-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5a52e0;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #e64c6d;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 101, 132, 0.4);
+        }
+
+        /* Motivational Quote */
+        .quote-section {
+            animation: fadeIn 1.2s ease-out;
+            background: linear-gradient(135deg, rgba(255, 101, 132, 0.1), rgba(255, 159, 67, 0.1));
+        }
+
+        .quote-text {
+            font-size: 1.4rem;
+            font-style: italic;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        body.dark-mode .quote-text {
+            background: rgba(42, 42, 58, 0.8);
+        }
+
+        .quote-text::before, .quote-text::after {
+            content: '"';
+            font-size: 3rem;
+            color: rgba(255, 101, 132, 0.3);
+            position: absolute;
+        }
+
+        .quote-text::before {
+            top: 0;
+            left: 10px;
+        }
+
+        .quote-text::after {
+            bottom: -30px;
+            right: 10px;
+        }
+
+        .quote-author {
+            display: block;
+            text-align: right;
+            font-weight: 600;
+            margin-top: 1rem;
+            color: var(--primary);
+        }
+
+        /* Progress Tracker */
+        .progress-section {
+            animation: fadeIn 1.4s ease-out;
+        }
+
+        .progress-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .progress-goals {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .goal-card {
+            background: rgba(108, 99, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            flex: 1;
+            margin: 0 0.5rem;
+            transition: var(--transition);
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .goal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-sm);
+            background: rgba(108, 99, 255, 0.2);
+        }
+
+        .goal-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 20px;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 10px;
+            width: 65%;
+            transition: width 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                            rgba(255, 255, 255, 0.1) 0%, 
+                            rgba(255, 255, 255, 0.3) 50%, 
+                            rgba(255, 255, 255, 0.1) 100%);
+            animation: shimmer 2s infinite linear;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .progress-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        /* Study Timer */
+        .timer-section {
+            animation: fadeIn 1.6s ease-out;
+            background: linear-gradient(135deg, rgba(66, 194, 255, 0.1), rgba(100, 255, 218, 0.1));
+        }
+
+        .timer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .timer-display {
+            font-size: 4rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 1rem 0;
+            text-shadow: 0 4px 10px rgba(108, 99, 255, 0.2);
+            position: relative;
+        }
+
+        .timer-mode {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .timer-btn {
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .timer-btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .timer-btn-primary:hover {
+            background: #5a52e0;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.4);
+        }
+
+        .timer-btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .timer-btn-secondary:hover {
+            background: #e64c6d;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 101, 132, 0.4);
+        }
+
+        .timer-presets {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .preset-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            background: rgba(108, 99, 255, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .preset-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .timer-settings {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .setting-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .setting-group label {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+        }
+
+        body.dark-mode .setting-group label {
+            color: var(--text-light);
+        }
+
+        .setting-group input {
+            padding: 0.5rem;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            width: 80px;
+            text-align: center;
+        }
+
+        body.dark-mode .setting-group input {
+            background: var(--card-bg-dark);
+            border-color: #444;
+            color: var(--text-light);
+        }
+
+        /* To-Do List */
+        .todo-section {
+            animation: fadeIn 1.8s ease-out;
+        }
+
+        .todo-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .todo-input-container {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .todo-input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .todo-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+            outline: none;
+        }
+
+        .todo-add-btn {
+            padding: 0 1.8rem;
+            border-radius: 10px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .todo-add-btn:hover {
+            background: #5a52e0;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.4);
+        }
+
+        .todo-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .todo-item {
+            background: rgba(108, 99, 255, 0.05);
+            padding: 1rem;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: var(--transition);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { 
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .todo-item:hover {
+            background: rgba(108, 99, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .todo-text {
+            flex: 1;
+            margin-left: 1rem;
+            position: relative;
+        }
+
+        .todo-text.completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        .todo-text.completed::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--success);
+            animation: strikeThrough 0.3s forwards;
+        }
+
+        @keyframes strikeThrough {
+            to { width: 100%; }
+        }
+
+        .todo-checkbox {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: var(--success);
+        }
+
+        .todo-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .todo-btn {
+            padding: 0.5rem;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .todo-btn-edit {
+            background: rgba(66, 194, 255, 0.1);
+            color: var(--accent);
+        }
+
+        .todo-btn-edit:hover {
+            background: rgba(66, 194, 255, 0.2);
+        }
+
+        .todo-btn-delete {
+            background: rgba(244, 67, 54, 0.1);
+            color: var(--danger);
+        }
+
+        .todo-btn-delete:hover {
+            background: rgba(244, 67, 54, 0.2);
+        }
+
+        .todo-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        body.dark-mode .todo-stats {
+            color: #aaa;
+        }
+
+        /* Resource Carousel */
+        .carousel-section {
+            animation: fadeIn 2s ease-out;
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+        }
+
+        .carousel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .carousel-nav {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .carousel-nav-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(108, 99, 255, 0.1);
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-nav-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .carousel {
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: transform;
+        }
+
+        .carousel-card {
+            min-width: calc(33.333% - 1rem);
+            margin-right: 1rem;
+            background: var(--card-bg-light);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            animation: fadeIn 1s ease-out;
+        }
+
+        body.dark-mode .carousel-card {
+            background: var(--card-bg-dark);
+        }
+
+        .carousel-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .carousel-card:last-child {
+            margin-right: 0;
+        }
+
+        .carousel-card-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .carousel-card-content {
+            padding: 1.5rem;
+        }
+
+        .carousel-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .carousel-card p {
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        body.dark-mode .carousel-card p {
+            color: var(--text-light);
+        }
+
+        .carousel-card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .carousel-card-link:hover {
+            color: var(--secondary);
+            transform: translateX(5px);
+        }
+
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .carousel-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(108, 99, 255, 0.3);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .carousel-indicator.active {
+            background: var(--primary);
+            transform: scale(1.2);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            animation: fadeIn 2.2s ease-out;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            color: var(--primary);
+        }
+
+        .form-control {
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+            outline: none;
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            align-self: flex-start;
+            padding: 1rem 2.5rem;
+            border-radius: 10px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .submit-btn:hover {
+            background: #5a52e0;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.4);
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            box-shadow: var(--shadow-lg);
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            pointer-events: none;
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-20px);
+            pointer-events: auto;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        /* Live Chat */
+        .live-chat {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-lg);
+            cursor: pointer;
+            z-index: 1000;
+            animation: pulse 2s infinite, bounce 2s infinite;
+            transition: var(--transition);
+        }
+
+        .live-chat:hover {
+            transform: scale(1.1) rotate(10deg);
+            animation: none;
+        }
+
+        .chat-container {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            background: var(--card-bg-light);
+            border-radius: 15px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 1000;
+            display: none;
+        }
+
+        body.dark-mode .chat-container {
+            background: var(--card-bg-dark);
+        }
+
+        .chat-container.open {
+            transform: translateY(0);
+            opacity: 1;
+            display: block;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-close {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .chat-messages {
+            height: 300px;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 0.8rem 1rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+
+        .message.user {
+            align-self: flex-end;
+            background: var(--primary);
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+
+        .message.bot {
+            align-self: flex-start;
+            background: rgba(108, 99, 255, 0.1);
+            color: var(--text-dark);
+            border-bottom-left-radius: 5px;
+        }
+
+        body.dark-mode .message.bot {
+            background: rgba(108, 99, 255, 0.2);
+            color: var(--text-light);
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        body.dark-mode .chat-input {
+            border-top: 1px solid #444;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            margin-right: 0.5rem;
+        }
+
+        body.dark-mode .chat-input input {
+            background: var(--card-bg-dark);
+            border-color: #444;
+            color: var(--text-light);
+        }
+
+        .chat-send {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .chat-send:hover {
+            background: #5a52e0;
+            transform: rotate(30deg);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .footer-container {
+            width: 85%;
+            margin: 0 auto;
+            max-width: 1400px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .footer-logo h3 {
+            font-size: 1.5rem;
+            background: linear-gradient(to right, white, #E0F7FA);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .footer-about p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .footer-links h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1.2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-links h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--secondary);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--secondary);
+            transform: translateX(5px);
+        }
+
+        .footer-social h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1.2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-social h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--secondary);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-icon:hover {
+            background: var(--secondary);
+            transform: translateY(-5px);
+        }
+
+        .newsletter p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-input {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-input input {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px 0 0 5px;
+            font-size: 0.9rem;
+        }
+
+        .newsletter-input button {
+            padding: 0 1rem;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .newsletter-input button:hover {
+            background: #e64c6d;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: rgba(108, 99, 255, 0.8);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+            z-index: 999;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+        }
+
+        .back-to-top:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .welcome-content {
+                flex-direction: column;
+            }
+            
+            .welcome-image {
+                width: 80%;
+                margin: 0 auto;
+            }
+            
+            .carousel-card {
+                min-width: calc(50% - 1rem);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .container, nav .nav-container, .search-bar, .footer-container {
+                width: 90%;
+            }
+            
+            .goal-card {
+                margin: 0.5rem 0;
+                flex: 100%;
+            }
+            
+            .progress-goals {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .tagline {
+                font-size: 1rem;
+            }
+            
+            nav {
+                top: 86px;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .carousel-card {
+                min-width: 100%;
+            }
+            
+            .timer-display {
+                font-size: 3rem;
+            }
+            
+            .timer-controls {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .logo {
+                width: 40px;
+                height: 40px;
+            }
+            
+            nav {
+                top: 78px;
+            }
+            
+            .section-content {
+                padding: 1.5rem;
+            }
+            
+            .timer-display {
+                font-size: 2.5rem;
+            }
+            
+            .timer-settings {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .chat-container {
+                width: 90%;
+                right: 5%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="logo-container">
+            <img src="https://via.placeholder.com/60" alt="BrainBoost Logo" class="logo">
+            <div>
+                <h1>BrainBoost</h1>
+                <p class="tagline">Supercharge your learning journey</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-container">
+            <div class="nav-links">
+                <a href="#home"><i class="fas fa-home"></i> Home</a>
+                <a href="#progress"><i class="fas fa-chart-line"></i> Progress</a>
+                <a href="#timer"><i class="fas fa-clock"></i> Timer</a>
+                <a href="#todo"><i class="fas fa-tasks"></i> Tasks</a>
+                <a href="#resources"><i class="fas fa-book"></i> Resources</a>
+                <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" placeholder="Search resources, tools, or tips..." id="searchInput" onkeyup="searchResources()">
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Welcome Section -->
+        <section id="home" class="welcome-section">
+            <div class="section-content">
+                <div class="welcome-content">
+                    <div class="welcome-text">
+                        <h2>Welcome to BrainBoost!</h2>
+                        <p>Your ultimate learning companion designed to help you study smarter, not harder. With interactive tools, personalized resources, and motivational features, we're here to boost your brainpower and make learning enjoyable.</p>
+                        <div class="cta-buttons">
+                            <a href="#resources" class="btn btn-primary">
+                                <i class="fas fa-rocket"></i> Get Started
+                            </a>
+                            <a href="#features" class="btn btn-secondary">
+                                <i class="fas fa-play-circle"></i> Watch Demo
+                            </a>
+                        </div>
+                    </div>
+                    <div class="welcome-image">
+                        <img src="https://via.placeholder.com/600x400" alt="Learning Illustration">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Motivational Quote -->
+        <section id="quote" class="quote-section">
+            <div class="section-content">
+                <h2>Daily Motivation</h2>
+                <div class="quote-text" id="quoteText">
+                    "The only way to do great work is to love what you do."
+                    <span class="quote-author">— Steve Jobs</span>
+                </div>
+                <button class="btn btn-primary" onclick="generateQuote()">
+                    <i class="fas fa-sync-alt"></i> New Quote
+                </button>
+            </div>
+        </section>
+
+        <!-- Progress Tracker -->
+        <section id="progress" class="progress-section">
+            <div class="section-content">
+                <h2>Your Learning Progress</h2>
+                <div class="progress-container">
+                    <p>Track your study goals and see how far you've come this week!</p>
+                    
+                    <div class="progress-goals">
+                        <div class="goal-card" onclick="setActiveGoal('reading')">
+                            <h3>Reading</h3>
+                            <p>3/5 chapters</p>
+                        </div>
+                        <div class="goal-card" onclick="setActiveGoal('projects')">
+                            <h3>Projects</h3>
+                            <p>1/2 completed</p>
+                        </div>
+                        <div class="goal-card" onclick="setActiveGoal('exercises')">
+                            <h3>Exercises</h3>
+                            <p>15/20 solved</p>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                    
+                    <div class="progress-info">
+                        <span>Weekly Progress</span>
+                        <span id="progressPercent">65%</span>
+                    </div>
+                    
+                    <div class="progress-actions">
+                        <button class="btn btn-primary" onclick="updateProgress(5)">
+                            <i class="fas fa-plus"></i> Add Progress
+                        </button>
+                        <button class="btn btn-secondary" onclick="resetProgress()">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Study Timer -->
+        <section id="timer" class="timer-section">
+            <div class="section-content">
+                <h2>Focus Timer</h2>
+                <div class="timer-container">
+                    <div class="timer-mode" id="timerMode">Focus Time</div>
+                    <div class="timer-display" id="timerDisplay">25:00</div>
+                    
+                    <div class="timer-controls">
+                        <button class="timer-btn timer-btn-primary" onclick="startTimer()">
+                            <i class="fas fa-play"></i> Start
+                        </button>
+                        <button class="timer-btn timer-btn-secondary" onclick="pauseTimer()">
+                            <i class="fas fa-pause"></i> Pause
+                        </button>
+                        <button class="timer-btn" onclick="resetTimer()">
+                            <i class="fas fa-stop"></i> Reset
+                        </button>
+                    </div>
+                    
+                    <div class="timer-presets">
+                        <button class="preset-btn" onclick="setTimer(25)">25:00</button>
+                        <button class="preset-btn" onclick="setTimer(50)">50:00</button>
+                        <button class="preset-btn" onclick="setTimer(5)">05:00</button>
+                    </div>
+                    
+                    <div class="timer-settings">
+                        <div class="setting-group">
+                            <label for="focusTime">Focus (min)</label>
+                            <input type="number" id="focusTime" value="25" min="1" max="120">
+                        </div>
+                        <div class="setting-group">
+                            <label for="shortBreak">Short Break (min)</label>
+                            <input type="number" id="shortBreak" value="5" min="1" max="30">
+                        </div>
+                        <div class="setting-group">
+                            <label for="longBreak">Long Break (min)</label>
+                            <input type="number" id="longBreak" value="15" min="1" max="60">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- To-Do List -->
+        <section id="todo" class="todo-section">
+            <div class="section-content">
+                <h2>Your Tasks</h2>
+                <div class="todo-container">
+                    <p>Organize your study tasks and stay on track!</p>
+                    
+                    <div class="todo-input-container">
+                        <input type="text" class="todo-input" id="todoInput" placeholder="Add a new task...">
+                        <button class="todo-add-btn" onclick="addTodo()">
+                            <i class="fas fa-plus"></i> Add
+                        </button>
+                    </div>
+                    
+                    <ul id="todoList" class="todo-list">
+                        <!-- Tasks will be added here dynamically -->
+                    </ul>
+                    
+                    <div class="todo-stats">
+                        <span id="totalTasks">0 tasks</span>
+                        <span id="completedTasks">0 completed</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resource Carousel -->
+        <section id="resources" class="carousel-section">
+            <div class="section-content">
+                <div class="carousel-header">
+                    <h2>Featured Resources</h2>
+                    <div class="carousel-nav">
+                        <button class="carousel-nav-btn" onclick="prevSlide()">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="carousel-nav-btn" onclick="nextSlide()">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="carousel" id="carousel">
+                    <div class="carousel-card">
+                        <img src="https://via.placeholder.com/400x180" alt="Study Guides" class="carousel-card-img">
+                        <div class="carousel-card-content">
+                            <h3>Study Guides</h3>
+                            <p>Access curated study guides for all subjects to ace your exams with confidence. Our guides are created by top students and educators.</p>
+                            <a href="#" class="carousel-card-link">
+                                Explore Guides <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="carousel-card">
+                        <img src="https://via.placeholder.com/400x180" alt="Time Management" class="carousel-card-img">
+                        <div class="carousel-card-content">
+                            <h3>Time Management</h3>
+                            <p>Master your schedule with proven time management strategies specifically designed for students with busy schedules.</p>
+                            <a href="#" class="carousel-card-link">
+                                Learn More <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="carousel-card">
+                        <img src="https://via.placeholder.com/400x180" alt="Online Tools" class="carousel-card-img">
+                        <div class="carousel-card-content">
+                            <h3>Online Tools</h3>
+                            <p>Boost your productivity with our collection of planners, calculators, citation generators, and other essential study tools.</p>
+                            <a href="#" class="carousel-card-link">
+                                Check Tools <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="carousel-card">
+                        <img src="https://via.placeholder.com/400x180" alt="Motivational Tips" class="carousel-card-img">
+                        <div class="carousel-card-content">
+                            <h3>Motivational Tips</h3>
+                            <p>Stay inspired with daily tips, success stories, and techniques to maintain high motivation throughout your learning journey.</p>
+                            <a href="#" class="carousel-card-link">
+                                Get Inspired <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="carousel-indicators" id="carouselIndicators">
+                    <!-- Indicators will be added dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section">
+            <div class="section-content">
+                <h2>Contact Us</h2>
+                <p>Have questions or feedback? We'd love to hear from you!</p>
+                
+                <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" class="form-control" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <!-- Live Chat -->
+    <div class="live-chat" onclick="toggleChat()">
+        <i class="fas fa-comment-dots"></i>
+    </div>
+    
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-header">
+            <h3>BrainBoost Support</h3>
+            <button class="chat-close" onclick="toggleChat()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot">
+                Hello! How can I help you today?
+            </div>
+        </div>
+        
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Type your message...">
+            <button class="chat-send" onclick="sendMessage()">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <span id="notificationText">Message sent successfully!</span>
+        <button class="notification-close" onclick="hideNotification()">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <div class="footer-logo">
+                    <img src="https://via.placeholder.com/40" alt="BrainBoost Logo">
+                    <h3>BrainBoost</h3>
+                </div>
+                <p>Empowering students worldwide with innovative learning tools and resources to achieve academic success and personal growth.</p>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#home"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="#features"><i class="fas fa-chevron-right"></i> Features</a></li>
+                    <li><a href="#resources"><i class="fas fa-chevron-right"></i> Resources</a></li>
+                    <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Tools</h4>
+                <ul>
+                    <li><a href="#timer"><i class="fas fa-chevron-right"></i> Study Timer</a></li>
+                    <li><a href="#todo"><i class="fas fa-chevron-right"></i> Task Manager</a></li>
+                    <li><a href="#progress"><i class="fas fa-chevron-right"></i> Progress Tracker</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Flashcards</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Note Taking</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-social">
+                <h4>Connect With Us</h4>
+                <div class="social-icons">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+                
+                <div class="newsletter">
+                    <p>Subscribe to our newsletter for tips and updates.</p>
+                    <div class="newsletter-input">
+                        <input type="email" placeholder="Your email">
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2023 BrainBoost. All Rights Reserved. Designed with <i class="fas fa-heart" style="color: var(--secondary);"></i> for students.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Dark/Light Mode Toggle
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.querySelector('.theme-toggle i');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            document.querySelector('.theme-toggle i').classList.replace('fa-moon', 'fa-sun');
+        }
+
+        // Smooth Scroll for Navigation Links
+        document.querySelectorAll('nav a, .btn').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    const section = document.querySelector(this.getAttribute('href'));
+                    section.scrollIntoView({ 
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Back to Top Button
+        const backToTopBtn = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+        
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Notification System
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            document.getElementById('notificationText').textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 5000);
+        }
+        
+        function hideNotification() {
+            document.getElementById('notification').classList.remove('show');
+        }
+
+        // Form Submission Handling
+        function handleSubmit(event) {
+            event.preventDefault();
+            showNotification('Thank you for your message! We will get back to you soon.');
+            document.getElementById('contactForm').reset();
+        }
+
+        // Search Functionality
+        function searchResources() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.carousel-card');
+            
+            cards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const description = card.querySelector('p').textContent.toLowerCase();
+                
+                if (title.includes(input) || description.includes(input)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Progress Tracker
+        let progress = 65;
+        let activeGoal = 'reading';
+        
+        function updateProgress(amount = 5) {
+            progress = Math.min(progress + amount, 100);
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('progressPercent').textContent = progress + '%';
+            
+            // Update the active goal
+            const goalCards = document.querySelectorAll('.goal-card');
+            goalCards.forEach(card => {
+                if (card.textContent.includes(activeGoal)) {
+                    const progressText = card.querySelector('p');
+                    const [current, total] = progressText.textContent.split('/').map(Number);
+                    const newCurrent = Math.min(current + 1, total);
+                    progressText.textContent = `${newCurrent}/${total}`;
+                }
+            });
+            
+            showNotification('Progress updated! Keep up the good work!');
+        }
+        
+        function resetProgress() {
+            progress = 0;
+            document.getElementById('progressBar').style.width = '0%';
+            document.getElementById('progressPercent').textContent = '0%';
+            showNotification('Progress reset. Ready for a fresh start!');
+        }
+        
+        function setActiveGoal(goal) {
+            activeGoal = goal;
+            document.querySelectorAll('.goal-card').forEach(card => {
+                card.style.border = 'none';
+            });
+            
+            event.currentTarget.style.border = `2px solid ${activeGoal === 'reading' ? 'var(--primary)' : 
+                                             activeGoal === 'projects' ? 'var(--secondary)' : 'var(--accent)'}`;
+        }
+
+        // Study Timer
+        let timer;
+        let time = 25 * 60; // 25 minutes in seconds
+        let isRunning = false;
+        let isFocusTime = true;
+        let focusSessions = 0;
+        
+        function startTimer() {
+            if (!isRunning) {
+                isRunning = true;
+                timer = setInterval(() => {
+                    if (time <= 0) {
+                        clearInterval(timer);
+                        isRunning = false;
+                        
+                        if (isFocusTime) {
+                            focusSessions++;
+                            if (focusSessions % 4 === 0) {
+                                // Long break after 4 focus sessions
+                                time = parseInt(document.getElementById('longBreak').value) * 60;
+                                document.getElementById('timerMode').textContent = 'Long Break';
+                                showNotification('Great job! Time for a long break.');
+                            } else {
+                                // Short break
+                                time = parseInt(document.getElementById('shortBreak').value) * 60;
+                                document.getElementById('timerMode').textContent = 'Short Break';
+                                showNotification('Focus session complete! Take a short break.');
+                            }
+                        } else {
+                            // Back to focus time
+                            time = parseInt(document.getElementById('focusTime').value) * 60;
+                            document.getElementById('timerMode').textContent = 'Focus Time';
+                            showNotification('Break over! Time to focus again.');
+                        }
+                        
+                        isFocusTime = !isFocusTime;
+                        updateTimerDisplay();
+                        playNotificationSound();
+                        return;
+                    }
+                    
+                    time--;
+                    updateTimerDisplay();
+                }, 1000);
+            }
+        }
+        
+        function pauseTimer() {
+            clearInterval(timer);
+            isRunning = false;
+        }
+        
+        function resetTimer() {
+            clearInterval(timer);
+            isRunning = false;
+            isFocusTime = true;
+            time = parseInt(document.getElementById('focusTime').value) * 60;
+            document.getElementById('timerMode').textContent = 'Focus Time';
+            updateTimerDisplay();
+        }
+        
+        function setTimer(minutes) {
+            if (!isRunning) {
+                time = minutes * 60;
+                updateTimerDisplay();
+                
+                if (minutes === parseInt(document.getElementById('focusTime').value)) {
+                    isFocusTime = true;
+                    document.getElementById('timerMode').textContent = 'Focus Time';
+                } else if (minutes === parseInt(document.getElementById('shortBreak').value)) {
+                    isFocusTime = false;
+                    document.getElementById('timerMode').textContent = 'Short Break';
+                } else if (minutes === parseInt(document.getElementById('longBreak').value)) {
+                    isFocusTime = false;
+                    document.getElementById('timerMode').textContent = 'Long Break';
+                }
+            }
+        }
+        
+        function updateTimerDisplay() {
+            const minutes = Math.floor(time / 60);
+            const seconds = time % 60;
+            document.getElementById('timerDisplay').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        
+        function playNotificationSound() {
+            // In a real app, you would play a sound here
+            console.log('Play notification sound');
+        }
+
+        // To-Do List
+        let todos = [];
+        let editingIndex = -1;
+        
+        function addTodo() {
+            const input = document.getElementById('todoInput');
+            const task = input.value.trim();
+            
+            if (task) {
+                if (editingIndex === -1) {
+                    // Add new task
+                    todos.push({ text: task, completed: false });
+                } else {
+                    // Update existing task
+                    todos[editingIndex].text = task;
+                    editingIndex = -1;
+                    document.querySelector('.todo-add-btn i').className = 'fas fa-plus';
+                    document.querySelector('.todo-add-btn').textContent = 'Add';
+                }
+                
+                input.value = '';
+                renderTodoList();
+                updateTodoStats();
+            }
+        }
+        
+        function renderTodoList() {
+            const todoList = document.getElementById('todoList');
+            todoList.innerHTML = '';
+            
+            todos.forEach((todo, index) => {
+                const li = document.createElement('li');
+                li.className = 'todo-item';
+                
+                li.innerHTML = `
+                    <input type="checkbox" class="todo-checkbox" ${todo.completed ? 'checked' : ''} 
+                           onclick="toggleTodo(${index})">
+                    <span class="todo-text ${todo.completed ? 'completed' : ''}">${todo.text}</span>
+                    <div class="todo-actions">
+                        <button class="todo-btn todo-btn-edit" onclick="editTodo(${index})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="todo-btn todo-btn-delete" onclick="deleteTodo(${index})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                
+                todoList.appendChild(li);
+            });
+        }
+        
+        function toggleTodo(index) {
+            todos[index].completed = !todos[index].completed;
+            renderTodoList();
+            updateTodoStats();
+        }
+        
+        function editTodo(index) {
+            const input = document.getElementById('todoInput');
+            input.value = todos[index].text;
+            input.focus();
+            editingIndex = index;
+            
+            document.querySelector('.todo-add-btn i').className = 'fas fa-save';
+            document.querySelector('.todo-add-btn').textContent = 'Save';
+        }
+        
+        function deleteTodo(index) {
+            todos.splice(index, 1);
+            renderTodoList();
+            updateTodoStats();
+            showNotification('Task removed!');
+        }
+        
+        function updateTodoStats() {
+            document.getElementById('totalTasks').textContent = `${todos.length} ${todos.length === 1 ? 'task' : 'tasks'}`;
+            
+            const completed = todos.filter(todo => todo.completed).length;
+            document.getElementById('completedTasks').textContent = `${completed} completed`;
+            
+            // Save to localStorage
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
+        
+        // Load todos from localStorage
+        if (localStorage.getItem('todos')) {
+            todos = JSON.parse(localStorage.getItem('todos'));
+            renderTodoList();
+            updateTodoStats();
+        }
+        
+        // Allow adding todo with Enter key
+        document.getElementById('todoInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                addTodo();
+            }
+        });
+
+        // Motivational Quote Generator
+        const quotes = [
+            {
+                text: "The only way to do great work is to love what you do.",
+                author: "Steve Jobs"
+            },
+            {
+                text: "Success is the sum of small efforts, repeated day in and day out.",
+                author: "Robert Collier"
+            },
+            {
+                text: "Believe you can and you're halfway there.",
+                author: "Theodore Roosevelt"
+            },
+            {
+                text: "Don't watch the clock; do what it does. Keep going.",
+                author: "Sam Levenson"
+            },
+            {
+                text: "The future belongs to those who believe in the beauty of their dreams.",
+                author: "Eleanor Roosevelt"
+            },
+            {
+                text: "You don't have to be great to start, but you have to start to be great.",
+                author: "Zig Ziglar"
+            },
+            {
+                text: "The expert in anything was once a beginner.",
+                author: "Helen Hayes"
+            }
+        ];
+        
+        function generateQuote() {
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            const quote = quotes[randomIndex];
+            
+            document.getElementById('quoteText').innerHTML = `
+                "${quote.text}"
+                <span class="quote-author">— ${quote.author}</span>
+            `;
+        }
+
+        // Resource Carousel
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-card');
+        const totalSlides = slides.length;
+        
+        function updateCarousel() {
+            const carousel = document.getElementById('carousel');
+            carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            // Update indicators
+            const indicators = document.querySelectorAll('.carousel-indicator');
+            indicators.forEach((indicator, index) => {
+                if (index === currentSlide) {
+                    indicator.classList.add('active');
+                } else {
+                    indicator.classList.remove('active');
+                }
+            });
+        }
+        
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateCarousel();
+        }
+        
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateCarousel();
+        }
+        
+        // Create indicators
+        function createIndicators() {
+            const indicatorsContainer = document.getElementById('carouselIndicators');
+            
+            for (let i = 0; i < totalSlides; i++) {
+                const indicator = document.createElement('div');
+                indicator.className = 'carousel-indicator';
+                indicator.onclick = () => {
+                    currentSlide = i;
+                    updateCarousel();
+                };
+                indicatorsContainer.appendChild(indicator);
+            }
+            
+            // Set first indicator as active
+            document.querySelector('.carousel-indicator').classList.add('active');
+        }
+        
+        // Initialize carousel
+        createIndicators();
+        
+        // Auto-slide every 5 seconds
+        let carouselInterval = setInterval(nextSlide, 5000);
+        
+        // Pause auto-slide on hover
+        document.querySelector('.carousel-section').addEventListener('mouseenter', () => {
+            clearInterval(carouselInterval);
+        });
+        
+        document.querySelector('.carousel-section').addEventListener('mouseleave', () => {
+            carouselInterval = setInterval(nextSlide, 5000);
+        });
+
+        // Live Chat
+        function toggleChat() {
+            const chatContainer = document.getElementById('chatContainer');
+            chatContainer.classList.toggle('open');
+        }
+        
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (message) {
+                // Add user message
+                addMessage(message, 'user');
+                input.value = '';
+                
+                // Simulate bot response after a delay
+                setTimeout(() => {
+                    const responses = [
+                        "I can help you with that!",
+                        "That's a great question. Let me check...",
+                        "Thanks for reaching out! How can I assist you?",
+                        "I'll look into that for you.",
+                        "Have you checked our resources section?"
+                    ];
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    addMessage(randomResponse, 'bot');
+                }, 1000);
+            }
+        }
+        
+        function addMessage(text, sender) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageElement = document.createElement('div');
+            messageElement.className = `message ${sender}`;
+            messageElement.textContent = text;
+            messagesContainer.appendChild(messageElement);
+            
+            // Scroll to bottom
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        
+        // Allow sending message with Enter key
+        document.getElementById('chatInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Initialize with some sample todos
+        if (todos.length === 0) {
+            todos = [
+                { text: "Complete math assignment", completed: false },
+                { text: "Read chapter 3 of biology", completed: false },
+                { text: "Review flashcards", completed: true }
+            ];
+            renderTodoList();
+            updateTodoStats();
+        }
+    </script>
+</body>
+</html>
